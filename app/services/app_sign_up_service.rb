@@ -10,6 +10,7 @@ class AppSignUpService < BaseService
 
     ApplicationRecord.transaction do
       create_user!
+      confirm_email!
       create_access_token!
     end
 
@@ -32,6 +33,12 @@ class AppSignUpService < BaseService
       expires_in: Doorkeeper.configuration.access_token_expires_in,
       use_refresh_token: Doorkeeper.configuration.refresh_token_enabled?
     )
+  end
+
+  def confirm_email!
+    if @user && @params[:email_is_verified]
+      @user.confirm!
+    end
   end
 
   def user_params
