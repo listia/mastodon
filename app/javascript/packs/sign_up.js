@@ -7,7 +7,7 @@ ready(() => {
   setInterval(() => {
     axios.get('/api/v1/emails/check_confirmation').then((response) => {
       if (response.data) {
-        window.location = '/start';
+        window.location = '/home';
       }
     }).catch(error => {
       console.error(error);
