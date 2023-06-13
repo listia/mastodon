@@ -5,7 +5,8 @@ class Auth::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def self.provides_callback_for(provider)
     define_method provider do
-      @user = User.find_for_oauth(request.env['omniauth.auth'], current_user)
+      # PASSCARD: don't use the currently sign in user, since you can only sign in via SSO and we want to allow users to quickly switch between accounts and memberships etc.
+      @user = User.find_for_oauth(request.env['omniauth.auth'], nil) # current_user)
 
       if @user.persisted?
         LoginActivity.create(
