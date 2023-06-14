@@ -84,7 +84,7 @@ class Auth::ConfirmationsController < Devise::ConfirmationsController
     if user.created_by_application && truthy_param?(:redirect_to_app)
       user.created_by_application.confirmation_redirect_uri
     elsif user_signed_in?
-      web_url('start')
+      web_url('home')
     else
       new_user_session_path
     end
